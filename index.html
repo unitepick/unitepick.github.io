@@ -62,6 +62,16 @@
         padding-right: 15%;
     }
 
+    .web-title{
+        writing-mode: vertical-lr;
+        font-family: "Last Ninja", Impact, fantasy;
+        font-size: 35pt;
+        background: linear-gradient(243deg, #fdf319, #ed2d13);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 6px -3px 0px #2a2929
+    }
+
     .element-item {
         width: 100px;
         height: 100px;
@@ -163,7 +173,7 @@
         cursor: pointer;
         margin: 10px;
         border-radius: 4px;
-        box-shadow: 0px 6px 7px;
+        box-shadow: 0px 4px 0px #2A2929;
     }
 
     .pokemon-shuffle-button{
@@ -213,6 +223,12 @@
             flex:1;
             margin-bottom: 20px;
         }
+
+        .web-title{
+            width: 0;
+            height: 0;
+            text-shadow: unset;
+        }
         
         .team-b-area{
             display: flex;
@@ -243,6 +259,7 @@
             height: 40px;
             cursor: pointer;
             margin: 10px;
+            box-shadow: 0px 4px 0px #2A2929;
         }
 
         .pokemon-shuffle-button{
@@ -309,7 +326,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="web-title">UNITE-PICK</div>
                 <!-- <lottie-player src="https://assets7.lottiefiles.com/private_files/lf30_yh8elhgn.json" background="transparent" id="userShuffleBtn" speed="3" class="button"></lottie-player> -->
+                
             </div>
         </div>
         <img class="versus-img" id="versusImg" src="./img/22591751.png"/>
