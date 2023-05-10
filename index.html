@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+    <link rel="shortcut icon" type="image/x-icon" href="./img/ball.ico">
+    <title>UNITE-PICK</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8566072639292145"
+     crossorigin="anonymous"></script>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+<script src="https://cdnjs.com/libraries/bodymovin" type="text/javascript"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+<script src="./pokemon.json" type="text/javascript"></script>
+<style>
+    html, body {
+        display: flex;
+        width: 100%; 
+        height: 100%;
+        margin: 0;
+        /* background-image: url('./img/background.jpeg');
+        background-size: cover; */
+    }
+ 
+    .containerHtml {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+    }
+
+    .flex-left-menu {
+        display: flex;
+        width: 700px;
+        height: 100%;
+        /* border-right: 4px dashed #34495e; */
+        flex-direction: column;
+    }
+    
+    .flex-left-sub-menu {
+        display: flex;
+        width: 400px;
+        flex-direction: column;
+        /* border-right: 4px dashed #2ecc71; */
+    }
+
+    .flex-content-area {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding-top: 100px;
+        padding-bottom: 100px;
+        padding-left: 15%;
+        padding-right: 15%;
+    }
+
+    .element-item {
+        width: 100px;
+        height: 100px;
+        margin: 15px;
+    }
+    
+    .element-item > img{
+        width: 100px;
+        height: 100px;
+        border: 0.8px solid #4f4f4f;
+        /* box-shadow: 3px 3px 2px 0.5px #2d2d2d; */
+        border-radius: 40px;
+    }
+
+    .element-item > div{
+        font-size: 10pt;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-weight: bold;
+        color: #303030
+    }
+
+    .team-a-area{
+        display: flex;
+        flex:1;
+        margin-bottom: 30px;
+    }
+    
+    .team-b-area{
+        display: flex;
+        flex:1;
+        margin-top: 30px;
+    }
+
+    .versus-profile{
+        border-radius: 20px;
+        background-color: #7620fa;
+        display: flex;
+        flex: 1;
+        border: 3px solid #303030;
+        margin: 5px;
+        cursor: pointer;
+        font-size: 15pt;
+        font-family: "Gill Sans", sans-serif;
+        font-weight: bold;
+        color: #d8d8d8;
+        box-shadow: 0px 5px 1px 1px #737373;
+        /* box-shadow: inset 0px 0px 27px 1px #494848; */
+        align-items: flex-end;
+    }
+
+    .pokemon-img {
+        flex: 1;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
+        border-radius: 20px;
+    }
+    
+
+    .versus-profile:hover{
+        opacity: 0.5;
+        background-color: #ea7925 ;
+    }
+
+    .versus-img {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -48.9%) scale(0.03);
+    }
+    
+    .pattern {
+        background-image: url("https://unite.pokemon.com/images/common/square-pattern-30.svg"),linear-gradient(180deg, rgb(0,0,0,0.3), rgba(0,0,0,0)38%);
+        background-size: 144px, auto;
+        background-color: transparent;
+        background-position: center,left top;
+        color: #ffe700;
+        flex-direction: column;
+    }
+    
+    span[name="userName"] {
+        color: white;
+        background-color: #2a2929;
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        border-radius: 0px 0px 10px 10px;
+    }
+
+    .button-area {
+        position:absolute;
+    }
+    
+
+    .button {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        margin: 10px;
+        border-radius: 4px;
+        box-shadow: 0px 6px 7px;
+    }
+
+    .pokemon-shuffle-button{
+        display: flex; 
+        width: 50px; 
+        height: 50px; 
+        flex-wrap: wrap; 
+        flex-direction: column;
+    }
+
+    @media screen and (max-width: 769px){
+        .flex-content-area {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .versus-img {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.02);
+        }
+
+        .versus-profile{
+            border-radius: 20px;
+            background-color: #7620fa;
+            display: flex;
+            flex: 1;
+            border: 3px solid #303030;
+            margin: 1px;
+            cursor: pointer;
+            font-size: 10pt;
+            font-family: "Gill Sans", sans-serif;
+            font-weight: bold;
+            color: #d8d8d8;
+            box-shadow: 0px 0px 0px 0px #737373;
+            align-items: flex-end;
+        }
+
+        .team-a-area{
+            display: flex;
+            flex:1;
+            margin-bottom: 20px;
+        }
+        
+        .team-b-area{
+            display: flex;
+            flex:1;
+            margin-top: 20px;
+        }
+
+        span[name="userName"] {
+            color: white;
+            background-color: #2a2929;
+            width: 100%;
+            padding-top: 15px;
+            padding-bottom: 20px;
+            padding-left: 5px;
+            border-radius: 0px 0px 10px 10px;
+        }
+
+        .button-area {
+            display: flex;
+            position: inherit !important;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .button {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        .pokemon-shuffle-button{
+            display: flex; 
+            width: 40px; 
+            height: 40px; 
+            flex-wrap: wrap; 
+            flex-direction: column;
+        }
+
+    }
+</style>
+<body>
+    <div class="containerHtml">
+        <!-- TODO: Content -->
+        <div class="flex-content-area" id="content">
+            <!-- <lottie-player id="readyLottie" src="https://assets1.lottiefiles.com/packages/lf20_4FXTF9ysEI.json"  background="transparent" style="margin: 100px; display:none; cursor: pointer;" speed="1" loop autoplay></lottie-player> -->
+                <div class="grid team-a-area">
+                    <div class="versus-profile" style="justify-content: center; align-items: center; padding: 0;">
+                        CLICK
+                    </div>
+                    <div class="versus-profile" style="justify-content: center; align-items: center; padding: 0;">
+                        CLICK
+                    </div>
+                    <div class="versus-profile" style="justify-content: center; align-items: center; padding: 0;">
+                        CLICK
+                    </div>
+                    <div class="versus-profile" style="justify-content: center; align-items: center; padding: 0;">
+                        CLICK
+                    </div>
+                    <div class="versus-profile" style="justify-content: center; align-items: center; padding: 0;">
+                        CLICK
+                    </div>
+                </div>
+                <div class="team-b-area">
+                    <div class="versus-profile" style="justify-content: center; align-items: center; padding: 0;">
+                        CLICK
+                    </div>
+                    <div class="versus-profile" style="justify-content: center; align-items: center; padding: 0;">
+                        CLICK
+                    </div>
+                    <div class="versus-profile" style="justify-content: center; align-items: center; padding: 0;">
+                        CLICK
+                    </div>
+                    <div class="versus-profile" style="justify-content: center; align-items: center; padding: 0;">
+                        CLICK
+                    </div>
+                    <div class="versus-profile" style="justify-content: center; align-items: center; padding: 0;">
+                        CLICK
+                    </div>
+                </div>
+            </div>
+            <div class="button-area">
+                <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_iwmd6pyr.json" background="transparent" id="userShuffleBtn" speed="3" class="button"></lottie-player>
+                <div class="button" id="pokemonShuffleBtn">
+                    <div class="pokemon-shuffle-button">
+                        <div style="display: flex; flex:1;">
+                            <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: #f16c38;"></div>
+                            <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: #aced5b;"></div>
+                        </div>
+                        <div style="display: flex; flex:1;">
+                            <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: #ce5fd3;"></div>
+                            <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: #29a5e3;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <lottie-player src="https://assets7.lottiefiles.com/private_files/lf30_yh8elhgn.json" background="transparent" id="userShuffleBtn" speed="3" class="button"></lottie-player> -->
+            </div>
+        </div>
+        <img class="versus-img" id="versusImg" src="./img/22591751.png"/>
+    </body>
+</html>
+<script>
+    const pokemonList = pokemon;
+    const teamInfo = {
+        teamA: [],
+        teamB: []
+    }
+    
+    $(document).ready(function(){
+        $('.versus-profile').on('click', function(){
+            const that = this;
+
+            $.confirm({
+                keyboardEnabled: true,
+                title: '유저 입력',
+                content: '' +
+                '<div class="form-group">' +
+                '<input type="text" name="userInput" placeholder="User name" class="name form-control" required />' +
+                '</div>',
+                buttons: {
+                    confirm: {
+                        text: '확인',
+                        btnClass: 'btn-blue',
+                        action: function () {
+                            var userValue = this.$content.find('.name').val();
+                            if(userValue){
+                                $(that).html(userValue);    
+                            }
+
+                        }
+                    },
+                    cancel: function () {
+                        //close
+                    },
+                },
+            });
+
+            setTimeout(() => {
+                $('input[name="userInput"]').focus();
+            }, 30);
+        })
+
+
+
+        // shuffle
+        $('#userShuffleBtn').on('click', function(e){
+            $('.versus-profile').off();
+            
+            const users = _.chain($('.versus-profile')).map('innerText').shuffle().value();
+            
+            $('#content').html(resetVersusProfileDom(users, returnABPokemon(pokemonList)));
+
+            $('.versus-profile').on('click', function(){
+                const that = this;
+            
+                $.confirm({
+                    title: '',
+                    content:'무엇을 하시겠습니까?',
+                    buttons: {
+                        confirm: {
+                            text: '유저 변경',
+                            action: function(){
+                                $.confirm({
+                                    title: '유저 입력',
+                                    content: '' +
+                                    '<div class="form-group">' +
+                                    '<input type="text" placeholder="User name" class="name form-control" required />' +
+                                    '</div>',
+                                    buttons: {
+                                        confirm: {
+                                            text: '확인',
+                                            btnClass: 'btn-blue',
+                                            action: function () {
+                                                var userValue = this.$content.find('.name').val();
+                                                if(userValue){
+                                                    $(that).html('<span name="userName">'+userValue+'</span>');    
+                                                }
+                                            }
+                                        },
+                                        cancel: function () {
+                                            //close
+                                        },
+                                    },
+                                });
+                            }
+                        },
+                        cancel: {
+                            text: '포켓몬 랜덤 변경',
+                            action: function(){
+                                const pickedPokemon = _.shuffle(pokemonList)[0];
+
+                                $(that).data('name', pickedPokemon.name);
+                                $(that).css('background-color', pickedPokemon.color);
+                                $(that).css('background-image', 'url(' + pickedPokemon.image + ')')
+                            }
+                        },
+                        somethingElse: {
+                            text: '취소',
+                            action: function(){
+                                
+                            }
+                        }
+                    }
+                })
+            })
+
+            // lottie play
+            const lottie = this;
+            $(lottie).trigger('play');
+            $(lottie).on('complete', function(e){
+                $(lottie).trigger('stop');
+            })
+        })
+
+        // shuffle pokemon
+        $('#pokemonShuffleBtn').on('click', function(){
+            animatePokemonShuffleBtn();
+            $('.versus-profile').off();
+
+            const users = _.chain($('.versus-profile')).map('innerText').value();
+            
+            $('#content').html(resetVersusProfileDom(users, returnABPokemon(pokemonList), true));
+
+            $('.versus-profile').on('click', function(){
+                const that = this;
+            
+                $.confirm({
+                    title: '',
+                    content:'무엇을 하시겠습니까?',
+                    buttons: {
+                        confirm: {
+                            text: '유저 변경',
+                            action: function(){
+                                $.confirm({
+                                    title: '유저 입력',
+                                    content: '' +
+                                    '<div class="form-group">' +
+                                    '<input type="text" placeholder="User name" class="name form-control" required />' +
+                                    '</div>',
+                                    buttons: {
+                                        confirm: {
+                                            text: '확인',
+                                            btnClass: 'btn-blue',
+                                            action: function () {
+                                                var userValue = this.$content.find('.name').val();
+                                                if(userValue){
+                                                    $(that).html('<span name="userName">'+userValue+'</span>');    
+                                                }
+
+                                            }
+                                        },
+                                        cancel: function () {
+                                            //close
+                                        },
+                                    },
+                                });
+                            }
+                        },
+                        cancel: {
+                            text: '포켓몬 랜덤 변경',
+                            action: function(){
+                                const pickedPokemon = _.shuffle(pokemonList)[0];
+
+                                $(that).data('name', pickedPokemon.name);
+                                $(that).css('background-color', pickedPokemon.color);
+                                $(that).css('background-image', 'url(' + pickedPokemon.image + ')')
+                            }
+                        },
+                        somethingElse: {
+                            text: '취소',
+                            action: function(){
+                                
+                            }
+                        }
+                    }
+                })
+            })
+        })
+        
+    })
+
+    function shuffleSinglePokemon(){
+        
+    }
+
+    function animatePokemonShuffleBtn(){
+        const shuffledColors = _.shuffle(['#f16c38', '#aced5b', '#ce5fd3', '#29a5e3'])
+        let dom = '';
+
+        dom += '<div class="pokemon-shuffle-button">';
+        dom += '    <div style="display: flex; flex:1;">';
+        dom += '        <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: ' + shuffledColors[0] + ';"></div>';
+        dom += '        <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color:  ' + shuffledColors[1] + ';"></div>';
+        dom += '    </div>';
+        dom += '    <div style="display: flex; flex:1;">';
+        dom += '       <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color:  ' + shuffledColors[2] + ';"></div>';
+        dom += '     <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color:  ' + shuffledColors[3] + ';"></div>';
+        dom += '    </div>';
+        dom += '</div>';
+
+        $('#pokemonShuffleBtn').html(dom);
+    }
+
+    function resetVersusProfileDom(users, pokemonABInfo){
+        let dom = '';
+        const teamA = _.chunk(users, 5)[0];
+        const teamB = _.chunk(users, 5)[1];
+        const teamAPokemonList = pokemonABInfo.a;
+        const teamBPokemonList = pokemonABInfo.b;
+
+        // Set teamA
+        dom += '<div class="team-a-area">';
+
+        _.forEach(teamA, function(name, index){
+            dom += '<div class="versus-profile pattern" data-name="' + teamAPokemonList[index].name + '" style="background-color:' + teamAPokemonList[index].color + ';">';
+            dom += '   <div class="pokemon-img" style="background-image: url(' + teamAPokemonList[index].image  + ')"></div>';
+            dom += '   <span name="userName">' + name + '</span>';
+            dom += '</div>';
+        })
+        
+        dom += '</div>';
+        
+        // Set teamB
+        dom += '<div class="team-b-area">';
+            
+        _.forEach(teamB, function(name, index){
+            dom += '<div class="versus-profile pattern" data-name="' + teamBPokemonList[index].name + '" style="background-color:' + teamBPokemonList[index].color + ';">';
+            dom += '   <div class="pokemon-img" style="background-image: url(' + teamBPokemonList[index].image  + ')"></div>';
+            dom += '   <span name="userName">' + name + '</span>';
+            dom += '</div>';
+        })
+
+        dom += '</div>';
+
+        return dom;
+    }
+
+    function returnABPokemon(list){
+        const pokemonList = _.chain(list)
+                             .shuffle()
+                             .shuffle()
+                             .shuffle()
+                             .value();
+
+        const teamAPokemon = _.chunk(pokemonList, 10)[0];
+        const teamBPokemon = _.chunk(pokemonList, 10)[1];                             
+
+        return {
+            a: teamAPokemon,
+            b: teamBPokemon
+        }
+    }
+
+</script>
