@@ -63,6 +63,7 @@
     }
 
     .web-title{
+        cursor: pointer;
         writing-mode: vertical-lr;
         font-family: "Last Ninja", Impact, fantasy;
         font-size: 35pt;
@@ -130,6 +131,11 @@
         border-radius: 20px;
     }
     
+    .tooltip-content {
+        width: 100px;
+        height:200px;
+        float: left;
+    }
 
     .versus-profile:hover{
         opacity: 0.5;
@@ -141,6 +147,13 @@
         top: 45%;
         left: 50%;
         transform: translate(-50%, -48.9%) scale(0.03);
+    }
+
+    .tooltip-inner{
+        /* float: left; */
+        max-width: 400px;
+        width:400px;
+        text-align: left;
     }
     
     .pattern {
@@ -326,9 +339,8 @@
                         </div>
                     </div>
                 </div>
-                <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_w4V3iTSELN.json" background="transparent" id="helpBtn" speed="2" class="button"></lottie-player>
-                
-                <div class="web-title">UNITE-PICK</div>
+                <lottie-player data-toggle="tooltip" data-placement="right" data-html="true" title="abcdefg" src="https://assets4.lottiefiles.com/packages/lf20_w4V3iTSELN.json" background="transparent" id="helpBtn" speed="2" class="button"></lottie-player>
+                <div onclick="location.href='/'" class="web-title" >UNITE-PICK</div>
                 <!-- <lottie-player src="https://assets7.lottiefiles.com/private_files/lf30_yh8elhgn.json" background="transparent" id="userShuffleBtn" speed="3" class="button"></lottie-player> -->
                 
             </div>
@@ -345,6 +357,10 @@
     }
     
     $(document).ready(function(){
+        setTooltip();
+
+        $('[data-toggle="tooltip"]').tooltip();
+
         $('.versus-profile').on('click', function(){
             const that = this;
 
@@ -516,7 +532,7 @@
         })
 
         // TODO: help button handler
-        $('#helpBtn').on('click tooltip', function(e){
+        $('#helpBtn').on('mouseover', function(e){
 
              // lottie play
             const lottie = this;
@@ -593,5 +609,20 @@
             a: teamAPokemon,
             b: teamBPokemon
         }
+    }
+
+    function setTooltip(){
+        let title = '';
+
+        title += '<b>* 사용 방법</b>';
+        title += '<div>1. 사각형 틀을 클릭하여 참여할 유저 닉네임 또는 이름을 입력합니다.</div>';
+        title += '<div>2. 왼쪽 상단의 몬스터볼 버튼을 누르면 무작위로 팀이 편성됩니다.</div>';
+        title += '<div>3. 팀 펀성 후 포켓몬 이미지를 클릭하면 유저 또는 포켓몬을 변경할 수 있습니다. </div>';
+        title += '<div>ㅤ</div>';
+        title += '<b>* 버튼 설명</b>';
+        title += '<div>- 몬스터볼: 유저, 포켓몬이 무작위로 편성됩니다. </div>';
+        title += '<div>- 4색 사각형: 포켓몬만 무작위로 편성됩니다. </div>';
+
+        $('#helpBtn').attr('title', title);
     }
 </script>
