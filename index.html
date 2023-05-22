@@ -18,6 +18,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="./js/jquery.transit.min.js"></script>
 
 
 <script src="./pokemon.json" type="text/javascript"></script>
@@ -484,6 +485,14 @@
             $(lottie).on('complete', function(e){
                 $(lottie).trigger('stop');
             })
+        
+            // animation
+            setTimeout(() => {
+                $('#teamA, #teamB').transition({
+                    opacity: 1,
+                    x: '0px'
+                }, 500, 'snap')
+            }, 100);
         })
 
         // shuffle pokemon
@@ -549,6 +558,14 @@
                     }
                 })
             })
+            
+            // animation
+            setTimeout(() => {
+                $('#teamA, #teamB').transition({
+                    opacity: 1,
+                    x: '0px'
+                }, 500, 'snap')
+            }, 100);
         })
 
         // TODO: help button handler
@@ -589,7 +606,7 @@
         const teamBPokemonList = pokemonABInfo.b;
 
         // Set teamA
-        dom += '<div class="team-a-area">';
+        dom += '<div class="team-a-area" id="teamA" style="transform:translateX(200px); opacity:0;">';
 
         _.forEach(teamA, function(name, index){
             dom += '<div class="versus-profile pattern" data-name="' + teamAPokemonList[index].name + '" style="background-color:' + teamAPokemonList[index].color + ';">';
@@ -601,7 +618,7 @@
         dom += '</div>';
         
         // Set teamB
-        dom += '<div class="team-b-area">';
+        dom += '<div class="team-b-area" id="teamB" style="transform:translateX(-200px); opacity:0;">';
             
         _.forEach(teamB, function(name, index){
             dom += '<div class="versus-profile pattern" data-name="' + teamBPokemonList[index].name + '" style="background-color:' + teamBPokemonList[index].color + ';">';
