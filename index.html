@@ -612,7 +612,7 @@
         _.forEach(teamA, function(name, index){
             dom += '<div class="versus-profile pattern" data-name="' + teamAPokemonList[index].name + '" style="background-color:' + teamAPokemonList[index].color + ';">';
             dom += '   <div class="pokemon-img" style="background-image: url(' + teamAPokemonList[index].image  + ')"></div>';
-            dom += '   <span name="userName">' + name + '</span>';
+            dom += '   <span name="userName">' + (name === 'CLICK' ? 'AI 트레이너' : name) + '</span>';
             dom += '</div>';
         })
         
@@ -624,7 +624,7 @@
         _.forEach(teamB, function(name, index){
             dom += '<div class="versus-profile pattern" data-name="' + teamBPokemonList[index].name + '" style="background-color:' + teamBPokemonList[index].color + ';">';
             dom += '   <div class="pokemon-img" style="background-image: url(' + teamBPokemonList[index].image  + ')"></div>';
-            dom += '   <span name="userName">' + name + '</span>';
+            dom += '   <span name="userName">' + (name === 'CLICK' ? 'AI 트레이너' : name) + '</span>';
             dom += '</div>';
         })
 
