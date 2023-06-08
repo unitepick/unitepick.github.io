@@ -210,6 +210,31 @@
         flex-direction: column;
     }
 
+    /* tooltip style */
+    .tooltip-inner {
+        background-color: #ffffff;
+        box-shadow: 0px 0px 4px black;
+        opacity: 1 !important;
+        color: black;
+        padding: 10px
+    }
+    .tooltip-arrow{
+        border-right-color: #9e9898 !important;
+        border-bottom-color: #9e9898 !important;
+    }
+    .tooltip.bs-tooltip-right .tooltip-arrow::before {
+        border-right-color: #ffffff !important;
+    }
+    .tooltip.bs-tooltip-left .tooltip-arrow::before {
+        border-left-color: #ffffff !important;
+    }
+    .tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+        border-bottom-color: #ffffff !important;
+    }
+    .tooltip.bs-tooltip-top .tooltip-arrow::before {
+        border-top-color: #ffffff !important;
+    }
+
     @media screen and (max-width: 769px){
         .flex-content-area {
             display: flex;
@@ -304,7 +329,7 @@
             flex-direction: column;
         }
 
-        .help-buntton{
+        .help-button{
             height:0;
             width:0;
         }
@@ -350,55 +375,64 @@
                         CLICK
                     </div>
                 </div>
-            </div>
-            <div class="button-area">
-                <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_iwmd6pyr.json" background="transparent" id="userShuffleBtn" speed="3" class="button"></lottie-player>
-                <div class="button" id="pokemonShuffleBtn">
-                    <div class="pokemon-shuffle-button">
-                        <div style="display: flex; flex:1;">
-                            <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: #f16c38;"></div>
-                            <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: #aced5b;"></div>
-                        </div>
-                        <div style="display: flex; flex:1;">
-                            <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: #ce5fd3;"></div>
-                            <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: #29a5e3;"></div>
-                        </div>
+        </div>
+        <div class="button-area">
+            <lottie-player src="https://assets6.lottiefiles.com/packages/lf20_iwmd6pyr.json" background="transparent" id="userShuffleBtn" speed="3" class="button"></lottie-player>
+            <!-- <div class="button" id="pokemonShuffleBtn">
+                <div class="pokemon-shuffle-button">
+                    <div style="display: flex; flex:1;">
+                        <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: #f16c38;"></div>
+                        <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: #aced5b;"></div>
+                    </div>
+                    <div style="display: flex; flex:1;">
+                        <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: #ce5fd3;"></div>
+                        <div style="display: flex; flex: 1; border-radius: 5px; margin:1px; background-color: #29a5e3;"></div>
                     </div>
                 </div>
-                <lottie-player data-toggle="tooltip" data-placement="right" data-html="true" title="abcdefg" src="https://assets4.lottiefiles.com/packages/lf20_w4V3iTSELN.json" background="transparent" id="helpBtn" speed="2" class="button help-buntton"></lottie-player>
-                <div onclick="location.href='/'" class="web-title" >UNITE-PICK</div>
-                <!-- <lottie-player src="https://assets7.lottiefiles.com/private_files/lf30_yh8elhgn.json" background="transparent" id="userShuffleBtn" speed="3" class="button"></lottie-player> -->
-                
-            </div>
+            </div> -->
+            <lottie-player data-toggle="tooltip" data-placement="auto" data-html="true" tabindex="0" src="https://assets4.lottiefiles.com/packages/lf20_LdyqGKq43K.json" background="transparent" id="modeBtn" speed="3" class="button setting-button"></lottie-player>
+            <!-- <lottie-player data-toggle="tooltip" data-placement="right" data-html="true" title="abcdefg" tabindex="0" src="https://assets4.lottiefiles.com/packages/lf20_w4V3iTSELN.json" background="transparent" id="helpBtn" speed="2" class="button help-button"></lottie-player> -->
+            <div onclick="location.href='/'" class="web-title" >UNITE-PICK</div>
         </div>
-        <img class="versus-img" id="versusImg" src="./img/22591751.png"/>
-        
-    </body>
+    </div>
+    <img class="versus-img" id="versusImg" src="./img/22591751.png"/>
+</body>
 </html>
 <script>
     const pokemonList = pokemon;
+    const optionInfo = {
+        gameMode : 'default',
+        shuffleMode : 'teamAndPokemon'
+    }
     const teamInfo = {
         teamA: [],
-        teamB: []
+        teamB: [],
+        modeAllPokemon: [],
     }
     
     $(document).ready(function(){
         setTooltip();
+        setModeTooltip();
 
-        $('[data-toggle="tooltip"]').tooltip();
+      
+        
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger: 'click'
+        });
 
         $('.versus-profile').on('click', function(){
             const that = this;
 
             $.confirm({
-                keyboardEnabled: true,
                 title: '유저 입력',
                 content: '' +
+                '<form action="" class="formName">' +
                 '<div class="form-group">' +
                 '<input type="text" name="userInput" placeholder="User name" class="name form-control" required />' +
-                '</div>',
+                '</div>'+
+                '</form>',    
                 buttons: {
-                    confirm: {
+                    formSubmit: {
                         text: '확인',
                         btnClass: 'btn-blue',
                         action: function () {
@@ -406,13 +440,24 @@
                             if(userValue){
                                 $(that).html(userValue);    
                             }
-
                         }
                     },
-                    cancel: function () {
-                        //close
-                    },
+                    cancel: {
+                        keys: ['esc'],
+                        action: function(){
+
+                        }
+                    }
                 },
+                onContentReady: function () {
+                    // bind to events
+                    var jc = this;
+                    this.$content.find('form').on('submit', function (e) {
+                        // if the user submits the form by pressing enter in the field.
+                        e.preventDefault();
+                        jc.$$formSubmit.trigger('click'); // reference the button and click it
+                    });
+                }
             });
 
             setTimeout(() => {
@@ -426,7 +471,13 @@
         $('#userShuffleBtn').on('click', function(e){
             $('.versus-profile').off();
             
-            const users = _.chain($('.versus-profile')).map('innerText').shuffle().value();
+            // set user
+            let user;
+            if(optionInfo.shuffleMode === 'teamAndPokemon' || optionInfo.shuffleMode === 'team'){
+                users = _.chain($('.versus-profile')).map('innerText').shuffle().value();
+            }else{
+                users = _.chain($('.versus-profile')).map('innerText').value();
+            }
             
             $('#content').html(resetVersusProfileDom(users, returnABPokemon(pokemonList)));
 
@@ -437,44 +488,66 @@
                     title: '',
                     content:'무엇을 하시겠습니까?',
                     buttons: {
-                        confirm: {
+                        formSubmit: {
                             text: '유저 변경',
                             action: function(){
                                 $.confirm({
                                     title: '유저 입력',
                                     content: '' +
+                                    '<form action="" class="formName">' +
                                     '<div class="form-group">' +
                                     '<input type="text" placeholder="User name" class="name form-control" required />' +
-                                    '</div>',
+                                    '</div>' +
+                                    '</form>',
                                     buttons: {
-                                        confirm: {
+                                        formSubmit: {
                                             text: '확인',
                                             btnClass: 'btn-blue',
                                             action: function () {
                                                 var userValue = this.$content.find('.name').val();
                                                 if(userValue){
-                                                    $(that).html('<span name="userName">'+userValue+'</span>');    
+                                                    $(that).find('span[name="userName"]').text(userValue);    
                                                 }
                                             }
                                         },
-                                        cancel: function () {
-                                            //close
-                                        },
+                                        cancel: {
+                                            keys: ['esc'],
+                                            action: function(){
+
+                                            }
+                                        }
                                     },
+                                    onContentReady: function () {
+                                        // bind to events
+                                        var jc = this;
+                                        this.$content.find('form').on('submit', function (e) {
+                                            // if the user submits the form by pressing enter in the field.
+                                            e.preventDefault();
+                                            jc.$$formSubmit.trigger('click'); // reference the button and click it
+                                        });
+                                    }
                                 });
                             }
                         },
                         cancel: {
                             text: '포켓몬 랜덤 변경',
                             action: function(){
-                                const pickedPokemon = _.shuffle(pokemonList)[0];
+                                const targetTeam = $(that).parent().attr('id');
+                                const pickedPokemon = _.chain(teamInfo.modeAllPokemon).filter((info) =>{
+                                    return !_.includes(_.map($('#'+ targetTeam).children('div'), 'dataset.name'), info.name); 
+                                }).shuffle().head().value();
+                                
+                                console.log(targetTeam)
+                                console.log(_.map($('#'+ targetTeam).children('div'), 'dataset.name'))
+                                console.log(pickedPokemon)
 
-                                $(that).data('name', pickedPokemon.name);
+                                $(that).attr('data-name', pickedPokemon.name);
                                 $(that).css('background-color', pickedPokemon.color);
-                                $(that).css('background-image', 'url(' + pickedPokemon.image + ')')
+                                $(that).find('.pokemon-img').css('background-image', 'url(' + pickedPokemon.image + ')')
                             }
                         },
                         somethingElse: {
+                            keys:['esc'],
                             text: '취소',
                             action: function(){
                                 
@@ -493,90 +566,42 @@
         
             // animation
             setTimeout(() => {
-                $('#teamA, #teamB').transition({
-                    opacity: 1,
-                    x: '0px'
-                }, 500, 'snap')
+                if(isMobile()){
+                    $('#teamA, #teamB').css({opacity: 1, x: '0px'})
+                }else{
+                    $('#teamA, #teamB').transition({
+                        opacity: 1,
+                        x: '0px'
+                    }, 500, 'snap')
+                }
             }, 100);
         })
 
-        // shuffle pokemon
-        $('#pokemonShuffleBtn').on('click', function(){
-            animatePokemonShuffleBtn();
-            $('.versus-profile').off();
-
-            const users = _.chain($('.versus-profile')).map('innerText').value();
-            
-            $('#content').html(resetVersusProfileDom(users, returnABPokemon(pokemonList), true));
-
-            $('.versus-profile').on('click', function(){
-                const that = this;
-            
-                $.confirm({
-                    title: '',
-                    content:'무엇을 하시겠습니까?',
-                    buttons: {
-                        confirm: {
-                            text: '유저 변경',
-                            action: function(){
-                                $.confirm({
-                                    title: '유저 입력',
-                                    content: '' +
-                                    '<div class="form-group">' +
-                                    '<input type="text" placeholder="User name" class="name form-control" required />' +
-                                    '</div>',
-                                    buttons: {
-                                        confirm: {
-                                            text: '확인',
-                                            btnClass: 'btn-blue',
-                                            action: function () {
-                                                var userValue = this.$content.find('.name').val();
-                                                if(userValue){
-                                                    $(that).html('<span name="userName">'+userValue+'</span>');    
-                                                }
-
-                                            }
-                                        },
-                                        cancel: function () {
-                                            //close
-                                        },
-                                    },
-                                });
-                            }
-                        },
-                        cancel: {
-                            text: '포켓몬 랜덤 변경',
-                            action: function(){
-                                const pickedPokemon = _.shuffle(pokemonList)[0];
-
-                                $(that).data('name', pickedPokemon.name);
-                                $(that).css('background-color', pickedPokemon.color);
-                                $(that).css('background-image', 'url(' + pickedPokemon.image + ')')
-                            }
-                        },
-                        somethingElse: {
-                            text: '취소',
-                            action: function(){
-                                
-                            }
-                        }
-                    }
-                })
+        $('#modeBtn').on('click', function(e){
+            $('input[type="radio"][name="mode"]').off();
+            $('input[type="radio"][name="mode"]').on('change', function(){
+                optionInfo.gameMode = $(this).val();
+                setModeTooltip();
             })
             
-            // animation
-            setTimeout(() => {
-                $('#teamA, #teamB').transition({
-                    opacity: 1,
-                    x: '0px'
-                }, 500, 'snap')
-            }, 100);
+            $('input[type="radio"][name="option"]').off();
+            $('input[type="radio"][name="option"]').on('change', function(){
+                optionInfo.shuffleMode = $(this).val();
+                setModeTooltip();
+            })
+
+            // lottie play
+            const lottie = this;
+            $(lottie).trigger('play');
+            $(lottie).on('complete', function(e){
+                $(lottie).trigger('stop');
+            })
         })
-
-        // TODO: help button handler
-        $('#helpBtn').on('mouseover', function(e){
-
-             // lottie play
+        
+        // help button handler
+        $('#helpBtn').on('click', function(e){
+            
+            // lottie play
             const lottie = this;
             $(lottie).trigger('play');
             $(lottie).on('complete', function(e){
@@ -616,7 +641,7 @@
         _.forEach(teamA, function(name, index){
             dom += '<div class="versus-profile pattern" data-name="' + teamAPokemonList[index].name + '" style="background-color:' + teamAPokemonList[index].color + ';">';
             dom += '   <div class="pokemon-img" style="background-image: url(' + teamAPokemonList[index].image  + ')"></div>';
-            dom += '   <span name="userName">' + (name === 'CLICK' ? 'AI 트레이너' : name) + '</span>';
+            dom += '   <span name="userName">' + (name === 'CLICK' ? 'AI' : name) + '</span>';
             dom += '</div>';
         })
         
@@ -628,7 +653,7 @@
         _.forEach(teamB, function(name, index){
             dom += '<div class="versus-profile pattern" data-name="' + teamBPokemonList[index].name + '" style="background-color:' + teamBPokemonList[index].color + ';">';
             dom += '   <div class="pokemon-img" style="background-image: url(' + teamBPokemonList[index].image  + ')"></div>';
-            dom += '   <span name="userName">' + (name === 'CLICK' ? 'AI 트레이너' : name) + '</span>';
+            dom += '   <span name="userName">' + (name === 'CLICK' ? 'AI' : name) + '</span>';
             dom += '</div>';
         })
 
@@ -638,14 +663,46 @@
     }
 
     function returnABPokemon(list){
-        const pokemonList = _.chain(list)
-                             .shuffle()
-                             .shuffle()
-                             .shuffle()
-                             .value();
+        let teamAPokemon;
+        let teamBPokemon;
 
-        const teamAPokemon = _.chunk(pokemonList, 10)[0];
-        const teamBPokemon = _.chunk(pokemonList, 10)[1];                             
+        console.log('@ mode : ' + optionInfo.gameMode);
+        
+        switch (optionInfo.gameMode) {
+            case 'attack': 
+                teamAPokemon = _.chain(pokemonList).filter({color:'#f16c38'}).shuffle().shuffle().chunk(5).head().value();
+                teamBPokemon = _.chain(pokemonList).filter({color:'#f16c38'}).shuffle().shuffle().chunk(5).head().value();
+                teamInfo.modeAllPokemon = _.chain(pokemonList).filter({color:'#f16c38'}).value();
+                break;
+            case 'speed': 
+                teamAPokemon = _.chain(pokemonList).filter({color:'#29a5e3'}).shuffle().shuffle().chunk(5).head().value();
+                teamBPokemon = _.chain(pokemonList).filter({color:'#29a5e3'}).shuffle().shuffle().chunk(5).head().value();
+                teamInfo.modeAllPokemon = _.chain(pokemonList).filter({color:'#29a5e3'}).value();
+                break;
+            case 'defense': 
+                teamAPokemon = _.chain(pokemonList).filter({color:'#aced5b'}).shuffle().shuffle().chunk(5).head().value();
+                teamBPokemon = _.chain(pokemonList).filter({color:'#aced5b'}).shuffle().shuffle().chunk(5).head().value();
+                teamInfo.modeAllPokemon = _.chain(pokemonList).filter({color:'#aced5b'}).value();
+                break;
+            case 'blance': 
+                teamAPokemon = _.chain(pokemonList).filter({color:'#ce5fd3'}).shuffle().shuffle().chunk(5).head().value();
+                teamBPokemon = _.chain(pokemonList).filter({color:'#ce5fd3'}).shuffle().shuffle().chunk(5).head().value();
+                teamInfo.modeAllPokemon = _.chain(pokemonList).filter({color:'#ce5fd3'}).value();
+                break;
+            case 'support': 
+                teamAPokemon = _.chain(pokemonList).filter({color:'#fecc51'}).shuffle().shuffle().chunk(5).head().value();
+                teamBPokemon = _.chain(pokemonList).filter({color:'#fecc51'}).shuffle().shuffle().chunk(5).head().value();
+                teamInfo.modeAllPokemon = _.chain(pokemonList).filter({color:'#fecc51'}).value();
+                break;
+            default:
+                teamAPokemon = _.chain(pokemonList).shuffle().shuffle().chunk(5).head().value();
+                teamBPokemon = _.chain(pokemonList).shuffle().shuffle().chunk(5).head().value();
+                teamInfo.modeAllPokemon = pokemonList;
+                break;
+        }
+
+        teamInfo.teamA = teamAPokemon;
+        teamInfo.teamB = teamBPokemon;
 
         return {
             a: teamAPokemon,
@@ -664,7 +721,41 @@
         title += '<b>* 버튼 설명</b>';
         title += '<div>- 몬스터볼: 유저, 포켓몬이 무작위로 편성됩니다. </div>';
         title += '<div>- 4색 사각형: 포켓몬만 무작위로 편성됩니다. </div>';
-
+        
         $('#helpBtn').attr('title', title);
+    }
+    
+    function setModeTooltip(){
+        let title = '';
+
+        title += '<b>* 게임 모드</b>';
+        title += '<div style="display:flex;">';
+        title += '<div style="margin-right: 10px;"><label><input type="radio" name="mode" ' + ((optionInfo.gameMode === 'default')? 'checked' : '') + ' value="default"> 기본  </label></div>';
+        title += '<div style="margin-right: 10px;"><label><input type="radio" name="mode" ' + ((optionInfo.gameMode === 'attack')? 'checked' : '') + ' value="attack"> 어택형  </label></div>';
+        title += '<div style="margin-right: 10px;"><label><input type="radio" name="mode" ' + ((optionInfo.gameMode === 'speed')? 'checked' : '') + ' value="speed"> 스피드형  </label></div>';
+        title += '<div style="margin-right: 10px;"><label><input type="radio" name="mode" ' + ((optionInfo.gameMode === 'defense')? 'checked' : '') + ' value="defense"> 디팬드형  </label></div>';
+        title += '<div style="margin-right: 10px;"><label><input type="radio" name="mode" ' + ((optionInfo.gameMode === 'support')? 'checked' : '') + ' value="support"> 서포트형  </label></div>';
+        title += '<div style="margin-right: 10px;"><label><input type="radio" name="mode" ' + ((optionInfo.gameMode === 'blance')? 'checked' : '') + ' value="blance"> 벨런스형  </label></div>';
+        title += '</div>';
+        title += '<br/>';
+        title += '<b>* 기타 옵션</b>';
+        title += '<div>';
+        title += '<div><label><input type="radio" name="option" ' + ((optionInfo.shuffleMode === 'teamAndPokemon')? 'checked' : '') + ' value="teamAndPokemon"> 팀 & 포켓몬 랜덤 </label></div>';
+        title += '<div><label><input type="radio" name="option" ' + ((optionInfo.shuffleMode === 'pokemon')? 'checked' : '') + ' value="pokemon"> 포켓몬만 랜덤 </label></div>';
+        // title += '<div><label><input type="radio" name="option" ' + ((optionInfo.shuffleMode === 'team')? 'checked' : '') + ' value="team"> 팀만 랜덤 </label></div>';
+        title += '</div>';
+        
+        // $('#modeBtn').attr('title', title);
+        $('#modeBtn').attr('data-original-title', title);
+    }
+
+    function isMobile(){
+        const userAgent = navigator.userAgent;
+
+        if (userAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || userAgent.match(/LG|SAMSUNG|Samsung/) != null){
+            return true;
+        }else{
+            return false;
+        }
     }
 </script>
