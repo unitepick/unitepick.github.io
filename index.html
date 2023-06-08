@@ -146,7 +146,7 @@
     .versus-profile:hover{
         /* opacity: 0.5; */
         /* background-color: #ea7925 ; */
-        /* transform: scale(1.05) */
+        transform: scale(1.05)
     }
 
     .versus-img {
@@ -156,12 +156,6 @@
         transform: translate(-50%, -48.9%) scale(0.03);
     }
 
-    .tooltip-inner{
-        /* float: left; */
-        max-width: 400px;
-        width:400px;
-        text-align: left;
-    }
 
     .mobile-tip{
         position: absolute;
@@ -216,8 +210,12 @@
         box-shadow: 0px 0px 4px black;
         opacity: 1 !important;
         color: black;
-        padding: 10px
+        padding: 10px;
+        max-width: 400px;
+        width:400px;
+        text-align: left;
     }
+
     .tooltip-arrow{
         border-right-color: #9e9898 !important;
         border-bottom-color: #9e9898 !important;
@@ -244,6 +242,12 @@
             padding-bottom: 10px;
             padding-left: 0;
             padding-right: 0;
+        }
+
+        .versus-profile:hover{
+        /* opacity: 0.5; */
+        /* background-color: #ea7925 ; */
+        transform: none;
         }
 
         .versus-img {
@@ -332,6 +336,11 @@
         .help-button{
             height:0;
             width:0;
+        }
+
+        .tooltip-inner {
+            font-size: 8pt;
+            width: '100%';
         }
 
     }
