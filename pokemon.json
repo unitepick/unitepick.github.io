@@ -261,11 +261,11 @@ pokemon = [
       "name": "Umbreon",
       "image": "https://unite.pokemon.com/images/pokemon/umbreon/roster/roster-umbreon-2x.png",
       "color": "#aced5b"
-    }
+    },
     // 2023 06 08
-    // {
-    //   "name": "Leafeon",
-    //   "image": "https://unite.pokemon.com/images/pokemon/leafeon/roster/roster-leafeon-2x.png",
-    //   "color": "#29a5e3"
-    // }
+    {
+      "name": "Leafeon",
+      "image": "https://unite.pokemon.com/images/pokemon/leafeon/roster/roster-leafeon-2x.png",
+      "color": "#29a5e3"
+    }
   ]
