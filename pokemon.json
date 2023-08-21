@@ -267,5 +267,16 @@ pokemon = [
       "name": "Leafeon",
       "image": "https://unite.pokemon.com/images/pokemon/leafeon/roster/roster-leafeon-2x.png",
       "color": "#29a5e3"
-    }
+    },
+    {
+      "name": "Inteleon",
+      "image": "https://unite.pokemon.com/images/pokemon/inteleon/roster/roster-inteleon-2x.png",
+      "color": "#f16c38"
+    },
+    {
+      "name": "Mewtwo",
+      "image": "https://unite.pokemon.com/images/pokemon/mewtwo/roster/roster-mewtwo-2x.png",
+      "color": "#f16c38"
+    },
+    
   ]
