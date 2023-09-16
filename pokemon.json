@@ -278,5 +278,9 @@ pokemon = [
       "image": "https://unite.pokemon.com/images/pokemon/mewtwo/roster/roster-mewtwo-2x.png",
       "color": "#f16c38"
     },
-    
+     {
+      "name": "Mewtwo",
+      "image": "  https://unite.pokemon.com/images/pokemon/blaziken/roster/roster-blaziken.png",
+      "color": "#ce5fd3"
+    }
   ]
