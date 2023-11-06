@@ -279,8 +279,13 @@ pokemon = [
       "color": "#f16c38"
     },
      {
-      "name": "Mewtwo",
-      "image": "  https://unite.pokemon.com/images/pokemon/blaziken/roster/roster-blaziken.png",
+      "name": "Blaziken",
+      "image": "https://unite.pokemon.com/images/pokemon/blaziken/roster/roster-blaziken.png",
       "color": "#ce5fd3"
-    }
+    },
+      {
+    "name": "Mimikyu",
+    "image": "https://unite.pokemon.com/images/pokemon/mimikyu/roster/roster-mimikyu.png",
+    "color": "#ce5fd3"
+  }
   ]
